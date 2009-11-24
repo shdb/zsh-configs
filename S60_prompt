@@ -1,0 +1,72 @@
+#!/bin/zsh
+setopt prompt_subst
+autoload colors
+colors
+
+# root prompt
+[ $UID = 0 ] && export PROMPT="$(print '%{\e[1;31m%}%m%{\e[1;34m%} %24<..<%~ %<<#%{\e[0m%} ')"
+# # normal user prompt
+[ $UID != 0 ] && export PROMPT="$(print '%{\e[1;32m%}%n@%m%{\e[1;34m%} %24<..<%~ %<<$%{\e[0m%} ')"
+
+get_prompt() {
+    if [[ -n $(get_git_prompt_info) ]]; then
+        echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}$(get_git_prompt_info)%{$fg_bold[blue]%}]%{$reset_color%}"
+    else
+        echo " "
+    fi
+}
+RPROMPT='$(get_prompt)'
+
+case $TERM in
+    xterm*|rxvt*)
+        precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+        preexec() {
+            case $1 in
+            fg|bg) getjobs "${(z)1}" ;;
+            *) print -Pn "\e]0;$1\a" ;;
+        esac
+        }
+        bindkey '\e[H' beginning-of-line
+        bindkey '\e[F' end-of-line
+        ;;
+    screen*)
+        function title {
+            print -nR $'\033k'$1$'\033'\\\
+
+            print -nR $'\033]0;'$2$'\a'
+        }
+        function precmd {
+            title zsh "$PWD"
+        }
+
+        preexec () {
+            emulate -L zsh
+            local -a cmd; cmd=(${(z)1})
+            title $cmd[1]:t "$cmd[2,-1]"
+        }
+        ;;
+esac
+
+getjobs () {
+    setopt localoptions noshwordsplit noksharrays
+    local texts
+    case $1 in
+        fg|bg) shift; [[ -n $1 ]] || set -- %% ;;
+        %*) ;;
+    esac
+    repeat $#
+    do
+        # This case statement emulates jobs.c:getjob()
+        case $1 in
+        %(|[%+])) 1=${(k)jobstates[(r)*:+:*]} ;;
+        %-) 1=${(k)jobstates[(r)*:-:*]} ;;
+        %<->) 1=${1#%} ;;
+        %[?]*) 1=${${(Ok)jobtexts[(R)*${1#%[?]}*]}[1]} ;;
+        *) 1=${${(Ok)jobtexts[(R)$1*]}[1]} ;;
+        esac
+        [[ -n $1 ]] && texts=($texts ${jobtexts[$1]})
+        shift
+    done
+    (( $#texts )) && print -Pn "\e]0;${texts}\a"
+    return 0
+}

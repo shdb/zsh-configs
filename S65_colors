@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+if [ "$TERM" != dumb ] && [ -x /usr/bin/grc ] ; then
+    alias cl='/usr/bin/grc -es --colour=auto'
+    alias configure='cl ./configure'
+    alias diff='cl diff'
+    #alias make='cl make'
+    #alias gcc='cl gcc'
+    #alias g++='cl g++'
+    alias as='cl as'
+    alias gas='cl gas'
+    #alias ld='cl ld'
+    alias netstat='cl netstat'
+    alias ping='cl ping'
+    #alias mpc='cl mpc'
+    alias traceroute='cl /usr/sbin/traceroute'
+    alias grep='grep --color'
+    alias ls='ls --color=always'
+    alias ll='ls -l --color=always'
+fi
+
+if test -e /etc/DIR_COLORS; then
+	eval `dircolors -b /etc/DIR_COLORS`
+fi

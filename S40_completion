@@ -1,0 +1,64 @@
+#!/bin/zsh
+
+zmodload -i zsh/complist
+
+zstyle ':completion:*' ambiguous true
+zstyle ':completion:*' glob true
+zstyle ':completion:*' word true
+zstyle ':completion:*' completer _complete _correct _approximate
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle -e ':completion:*:approximate:*' \
+        max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*:functions' ignored-patterns '_*'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+zstyle ':completion:*:kill:*' insert-ids single
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+
+zstyle ':completion:*:man:*' separate-sections true
+zstyle ':completion:*:ssh:*' group-order 'users' 'hosts'
+zstyle ':completion:*:cd:*' tag-order \
+     local-directories directory-stack named-directories path-directories
+
+## on processes completion complete all user processes
+zstyle ':completion:*:processes' command 'ps -au$USER'
+
+# ssh/scp-completion
+zstyle ':completion:*:scp:*' tag-order \
+      'hosts:-host hosts:-domain:domain hosts:-ipaddr:IP\ address *'
+zstyle ':completion:*:scp:*' group-order \
+      users files all-files hosts-domain hosts-host hosts-ipaddr
+zstyle ':completion:*:ssh:*' tag-order \
+      users 'hosts:-host hosts:-domain:domain hosts:-ipaddr:IP\ address *'
+zstyle ':completion:*:ssh:*' group-order \
+      hosts-domain hosts-host users hosts-ipaddr
+zstyle ':completion:*:(ssh|scp):*:hosts-host' ignored-patterns \
+      '*.*' loopback localhost
+zstyle ':completion:*:(ssh|scp):*:hosts-domain' ignored-patterns \
+      '<->.<->.<->.<->' '^*.*' '*@*'
+zstyle ':completion:*:(ssh|scp):*:hosts-ipaddr' ignored-patterns \
+      '^<->.<->.<->.<->' '127.0.0.<->'
+zstyle ':completion:*:(ssh|scp):*:users' ignored-patterns \
+      adm bin daemon halt lp named shutdown sync mail news uucp operator \
+      man postmaster smmsp portage nobody ldap sshd cron fcron dhcp ntp \
+      p2p sockd rcp mysql squeezecenter games proxy www-data backup list \
+      irc gnats privoxy debian-tor messagebus Debian-exim mpd statd bitlbee \
+      identd gitlog avahi libuuid haldaemon saned gnunet sys
+zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
+      ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) \
+                      /dev/null)"}%%[# ]*}//,/ }
+      ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
+      ${${${(M)${(s:# :)${(zj:# :)${(Lf)"$([[ -f ~/.ssh/config ]] && <~/.ssh/config)"}%%\#*}}##host(|name) *}#host(|name) }/\*}
+      )'
+
+# format of menu & CO
+zstyle ':completion:*:corrections' format $'%{\e[0;31m%}%d (errors: %e)%}'
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format \
+  $'%{\e[0;31m%}No matches for:%{\e[0m%} %d'
+zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'

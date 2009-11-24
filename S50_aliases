@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+alias mv='mv -v'
+alias cp='cp -v'
+alias rm='rm -v'
+alias lsd='ls -d *(/)'
+alias lld='ls -l -d *(/)'
+alias chown='chown -v'
+alias chgrp='chgrp -v'
+alias less='less -r -i'
+alias xstart='startx "/usr/local/bin/xstarter xterm" -- :1'
+alias cdplay='mount /cdrom && mplayer /cdrom/* && umount /cdrom'
+alias scpresume="rsync --partial --progress --rsh=ssh --inplace --timeout=10"
+alias cal="cal -m"
+alias e='smartextract'
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'

@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
+HISTSIZE=500
+SAVEHIST=500
+HISTFILE=~/.history
+LC_ALL="C"
+EDITOR=vim
+PAGER='less -X -M'
+LS_OPT2='--color=auto'
+MAKEOPTS="-j"$(($(cat /proc/cpuinfo | grep -c vendor_id )+1))
+
+export PATH HISTSIZE SAVEHIST HISTFILE LC_ALL EDITOR PAGER LS_OPT2 MAKEOPTS
+
+typeset -ga preexec_functions
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
+setopt prompt_subst
