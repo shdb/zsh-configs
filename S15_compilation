@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+if [[ -e /usr/bin/ccache ]] then
+	if [[ -e /usr/bin/distcc && $(hostname) == 'shar' ]] then
+		PATH="/usr/lib/ccache/bin:/usr/lib/distcc/bin:${PATH}"
+	else
+		PATH="/usr/lib/ccache/bin:${PATH}"
+	fi
+fi
+
+MAKEOPTS="-j"$(($(cat /proc/cpuinfo | grep -c vendor_id )+1))
+
+export PATH MAKEOPTS

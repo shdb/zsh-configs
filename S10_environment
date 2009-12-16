@@ -8,9 +8,8 @@ LC_ALL="C"
 EDITOR=vim
 PAGER='less -X -M'
 LS_OPT2='--color=auto'
-MAKEOPTS="-j"$(($(cat /proc/cpuinfo | grep -c vendor_id )+1))
 
-export PATH HISTSIZE SAVEHIST HISTFILE LC_ALL EDITOR PAGER LS_OPT2 MAKEOPTS
+export PATH HISTSIZE SAVEHIST HISTFILE LC_ALL EDITOR PAGER LS_OPT2
 
 typeset -ga preexec_functions
 typeset -ga precmd_functions
