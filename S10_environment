@@ -1,15 +1,16 @@
 #!/bin/zsh
 
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-HISTSIZE=500
-SAVEHIST=500
-HISTFILE=~/.history
-LC_ALL="C"
-EDITOR=vim
-PAGER='less -X -M'
-LS_OPT2='--color=auto'
-
-export PATH HISTSIZE SAVEHIST HISTFILE LC_ALL EDITOR PAGER LS_OPT2
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export HISTSIZE=500
+export SAVEHIST=500
+export HISTFILE=~/.history
+export LC_ALL="C"
+export EDITOR=vim
+export PAGER='less -X -M'
+if [[ -e /usr/bin/vimmanpager ]] then
+	export MANPAGER=/usr/bin/vimmanpager
+fi
+export LS_OPT2='--color=auto'
 
 typeset -ga preexec_functions
 typeset -ga precmd_functions
