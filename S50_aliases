@@ -13,6 +13,7 @@ alias cdplay='mount /cdrom && mplayer /cdrom/* && umount /cdrom'
 alias scpresume="rsync --partial --progress --rsh=ssh --inplace --timeout=10"
 alias cal="cal -m"
 alias e='smartextract'
+alias mplayer='mplayer -lavdopts threads=2'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
