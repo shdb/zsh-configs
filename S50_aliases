@@ -18,6 +18,12 @@ alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
 
+# suffix aliases
+alias -s c=vim
+alias -s java=vim
+alias -s pl=vim
+alias -s tex=vim
+
 if [ "$TERM" = dumb ] || [ ! -x /usr/bin/grc ] ; then
 	alias ll='ls -l'
 fi
