@@ -17,3 +17,7 @@ alias mplayer='mplayer -lavdopts threads=2'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
+
+if [ "$TERM" = dumb ] || [ ! -x /usr/bin/grc ] ; then
+	alias ll='ls -l'
+fi
