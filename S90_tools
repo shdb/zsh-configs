@@ -5,6 +5,7 @@ smartextract () {
         case $1 in
             *.tar.bz2)   tar -jxvf $1        ;;
             *.tbz2)      tar -jxvf $1        ;;
+            *.tar.xz)    tar -Jxvf $1        ;;
             *.tar.gz)    tar -zxvf $1        ;;
             *.tgz)       tar -zxvf $1        ;;
             *.tar)       tar -xvf $1         ;;
