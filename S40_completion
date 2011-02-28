@@ -26,6 +26,7 @@ zstyle ':completion:*:cd:*' tag-order \
 
 ## on processes completion complete all user processes
 zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:processes-names' command 'ps -e -o comm='
 
 # ssh/scp-completion
 zstyle ':completion:*:scp:*' tag-order \
