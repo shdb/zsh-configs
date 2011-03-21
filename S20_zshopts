@@ -12,3 +12,5 @@ setopt pushdignoredups
 setopt extended_glob
 setopt vi
 setopt zle
+
+autoload -U zmv
