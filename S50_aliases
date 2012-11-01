@@ -16,6 +16,8 @@ alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
 
+alias sx='tmux new-session -d -s x11 "startx" && exit'
+
 # suffix aliases
 alias -s c=vim
 alias -s java=vim
