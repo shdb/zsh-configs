@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export HISTSIZE=500
 export SAVEHIST=500
 export HISTFILE=~/.history
