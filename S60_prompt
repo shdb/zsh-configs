@@ -10,9 +10,9 @@ colors
 
 get_prompt() {
     if [[ -n $(get_git_prompt_info) ]]; then
-        echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}$(get_git_prompt_info)%{$fg_bold[blue]%}]%{$reset_color%}"
+        echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}$(get_git_prompt_info)%{$fg_bold[blue]%}][%{$fg_bold[green]%}%D{%H:%M}%{$fg_bold[blue]%}]%{$reset_color%}"
     else
-        echo ""
+        echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}%D{%H:%M}%{$fg_bold[blue]%}]%{$reset_color%}"
     fi
 }
 RPROMPT='$(get_prompt)'
