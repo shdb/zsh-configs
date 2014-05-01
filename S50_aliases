@@ -8,7 +8,6 @@ alias lld='ls -l -d *(/)'
 alias chown='chown -v'
 alias chgrp='chgrp -v'
 alias less='less -r -i'
-alias xstart='startx "/usr/local/bin/xstarter xterm" -- :1'
 alias scpresume="rsync --partial --progress --rsh=ssh --inplace --timeout=10"
 alias cal="cal -m"
 alias e='smartextract'
@@ -16,7 +15,10 @@ alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
 
-alias sx='tmux new-session -d -s x11 "startx" && exit'
+if [ -e /usr/bin/startx ] ; then
+	alias sx='tmux new-session -d -s x11 "startx" && exit'
+	alias xstart='startx "/usr/local/bin/xstarter xterm" -- :1'
+fi
 
 # suffix aliases
 alias -s c=vim
