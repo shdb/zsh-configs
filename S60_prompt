@@ -3,8 +3,24 @@ setopt prompt_subst
 autoload colors
 colors
 
-TMOUT=10
-TRAPALRM () { zle reset-prompt }
+schedprompt() {
+  emulate -L zsh
+  zmodload -i zsh/sched
+
+  # Remove existing event, so that multiple calls to
+  # "schedprompt" work OK.  (You could put one in precmd to push
+  # the timer 30 seconds into the future, for example.)
+  integer i=${"${(@)zsh_scheduled_events#*:*:}"[(I)schedprompt]}
+  (( i )) && sched -$i
+
+  # Test that zle is running before calling the widget (recommended
+  # to avoid error messages).
+  # Otherwise it updates on entry to zle, so there's no loss.
+  zle && zle reset-prompt
+
+  # This ensures we're not too far off the start of the minute
+  sched +30 schedprompt
+}
 
 # root prompt
 [ $UID = 0 ] && export PROMPT="$(print '%{\e[1;31m%}%m%{\e[1;34m%} %24<..<%~ %<<#%{\e[0m%} ')"
@@ -19,6 +35,7 @@ get_prompt() {
     fi
 }
 RPROMPT='$(get_prompt)'
+schedprompt
 
 case $TERM in
     xterm*|rxvt*)
