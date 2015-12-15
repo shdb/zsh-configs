@@ -3,6 +3,9 @@ setopt prompt_subst
 autoload colors
 colors
 
+TMOUT=10
+TRAPALRM () { zle reset-prompt }
+
 # root prompt
 [ $UID = 0 ] && export PROMPT="$(print '%{\e[1;31m%}%m%{\e[1;34m%} %24<..<%~ %<<#%{\e[0m%} ')"
 # # normal user prompt
