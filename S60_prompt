@@ -19,7 +19,7 @@ schedprompt() {
   zle && zle reset-prompt
 
   # This ensures we're not too far off the start of the minute
-  sched +30 schedprompt
+  sched +$((60 - $(date +%S))) schedprompt
 }
 
 # root prompt
