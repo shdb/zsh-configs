@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+export KEYTIMEOUT=1
 export HISTSIZE=500
 export SAVEHIST=500
 export HISTFILE=~/.history
