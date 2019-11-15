@@ -6,6 +6,7 @@ export SAVEHIST=500
 export HISTFILE=~/.history
 export EDITOR=vim
 export PAGER='less -X -M'
+export MANPAGER='less'
 if [[ -e /usr/bin/vimmanpager ]] then
 	export MANPAGER=/usr/bin/vimmanpager
 fi

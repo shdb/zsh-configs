@@ -1,38 +1,47 @@
 #!/bin/zsh
 
+#rationalise-dot() {
+#    # Auto-expand "..." to "../..", "...." to "../../.." etc.
+#    # It skips certain commands (git, tig, p4).
+#    #
+#    # resolve-alias is defined in a separate function.
+#
+#    local MATCH # keep the regex match from leaking to the environment.
+#
+#    # Skip pasted text.
+#    if (( PENDING > 0 )); then
+#      zle self-insert
+#      return
+#    fi
+#
+#    if [[ $LBUFFER =~ '(^|/| |    |'$'\n''|\||;|&)\.\.$' ]] \
+#      && ! [[ $(resolve-alias $LBUFFER) =~ '^(git|tig|p4)' ]]; then
+#      LBUFFER+=/
+#      zle self-insert
+#      zle self-insert
+#    else
+#      zle self-insert
+#    fi
+#}
+
 rationalise-dot() {
-	# Auto-expand "..." to "../..", "...." to "../../.." etc.
-	# It skips certain commands (git, tig, p4).
-	#
-	# resolve-alias is defined in a separate function.
-
-	local MATCH # keep the regex match from leaking to the environment.
-
-	# Skip pasted text.
-	if (( PENDING > 0 )); then
-	  zle self-insert
-	  return
-	fi
-
-	if [[ $LBUFFER =~ '(^|/| |	|'$'\n''|\||;|&)\.\.$' ]] \
-	  && ! [[ $(resolve-alias $LBUFFER) =~ '^(git|tig|p4)' ]]; then
-	  LBUFFER+=/
-	  zle self-insert
-	  zle self-insert
-	else
-	  zle self-insert
-	fi
+    if [[ $KEYS = "." && $LBUFFER = *.. ]]; then
+        LBUFFER+=/..
+    else
+        zle .self-insert "$@"
+    fi
 }
+zle -N self-insert rationalise-dot
 
 resolve-alias() {
-	# Recursively resolve aliases and echo the command.
-	typeset -a cmd
-	cmd=(${(z)1})
-	while (( ${+aliases[$cmd[1]]} )) \
-		&& [[ ${aliases[$cmd[1]]} != $cmd ]]; do
-	  cmd=(${(z)aliases[${cmd[1]}]})
-	done
-	echo $cmd
+    # Recursively resolve aliases and echo the command.
+    typeset -a cmd
+    cmd=(${(z)1})
+    while (( ${+aliases[$cmd[1]]} )) \
+        && [[ ${aliases[$cmd[1]]} != $cmd ]]; do
+      cmd=(${(z)aliases[${cmd[1]}]})
+    done
+    echo $cmd
 }
 
 alias mv='mv -v'
@@ -46,11 +55,10 @@ alias less='less -r -i'
 alias scpresume="rsync --partial --progress --rsh=ssh --inplace --timeout=10"
 alias cal="cal -m"
 alias e='smartextract'
-alias -g ...='../..'
 
 if [ -e /usr/bin/startx ] ; then
-	alias sx='tmux new-session -d -s x11 "startx" && exit'
-	alias xstart='startx "/usr/local/bin/xstarter xterm" -- :1'
+    alias sx='tmux new-session -d -s x11 "startx" && exit'
+    alias xstart='startx "/usr/local/bin/xstarter xterm" -- :1'
 fi
 
 # suffix aliases
@@ -60,16 +68,16 @@ alias -s pl=vim
 alias -s tex=vim
 
 if [ "$TERM" = dumb ] || [ ! -x /usr/bin/grc ] ; then
-	alias ll='ls -l'
+    alias ll='ls -l'
 fi
 
 # just type '...' to get '../..'
 # Originally by grml, improved by Mikachu
-if zmodload zsh/regex 2>/dev/null; then # might not be available (e.g. on DS212+)
+#if zmodload zsh/regex 2>/dev/null; then # might not be available (e.g. on DS212+)
   #autoload -Uz rationalise-dot  # in ~/.dotfiles/oh-my-zsh/functions/rationalise-dot
-  zle -N rationalise-dot
-  bindkey . rationalise-dot
+  #zle -N rationalise-dot
+  #bindkey . rationalise-dot
   # without this, typing a . aborts incremental history search
   # "isearch" does not exist in zsh 4.3.6 (Debian Lenny)
-  bindkey -M isearch . self-insert 2>/dev/null
-fi
+  #bindkey -M isearch . self-insert 2>/dev/null
+#fi
