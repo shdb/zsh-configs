@@ -9,6 +9,7 @@ smartextract () {
             *.xz)        unxz $1             ;;
             *.tar.gz)    tar -zxvf $1        ;;
             *.tgz)       tar -zxvf $1        ;;
+            *.tar.zst)   tar -I zstd -xvf $1 ;;
             *.tar)       tar -xvf $1         ;;
             *.bz2)       bunzip2 $1          ;;
             *.gz)        gunzip $1           ;;
