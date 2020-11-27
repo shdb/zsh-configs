@@ -13,7 +13,7 @@ if [ "$TERM" != dumb ] && [ -x /usr/bin/grc ] ; then
     alias netstat='cl netstat'
     alias ping='cl ping'
     #alias mpc='cl mpc'
-    alias traceroute='cl /usr/sbin/traceroute'
+    alias traceroute='cl /usr/bin/traceroute'
     alias grep='grep --color'
     alias ls='ls --color=always'
     alias ll='ls -l --color=always'
