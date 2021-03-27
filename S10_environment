@@ -15,3 +15,7 @@ typeset -ga preexec_functions
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 setopt prompt_subst
+
+PATH="/usr/lib/ccache/bin:${PATH}"
+CCACHE_DIR="/var/cache/ccache"
+DISTCC_DIR="/var/tmp/portage/.distcc"
