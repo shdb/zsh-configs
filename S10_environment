@@ -4,13 +4,11 @@ export KEYTIMEOUT=1
 export HISTSIZE=500
 export SAVEHIST=500
 export HISTFILE=~/.history
-export EDITOR=vim
-export PAGER='less -X -M'
-export MANPAGER='less'
-export BC_ENV_ARGS=$HOME/.config/bc/rc
-if [[ -e /usr/bin/vimmanpager ]] then
-	export MANPAGER=/usr/bin/vimmanpager
-fi
+export EDITOR=nvim
+#export PAGER='less -X -M'
+#if [[ -e /usr/bin/vimmanpager ]] then
+#	export MANPAGER=/usr/bin/vimmanpager
+#fi
 export LS_OPT2='--color=auto'
 
 typeset -ga preexec_functions
