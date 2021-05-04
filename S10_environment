@@ -5,10 +5,8 @@ export HISTSIZE=500
 export SAVEHIST=500
 export HISTFILE=~/.history
 export EDITOR=nvim
-#export PAGER='less -X -M'
-#if [[ -e /usr/bin/vimmanpager ]] then
-#	export MANPAGER=/usr/bin/vimmanpager
-#fi
+export PAGER='less -X -M'
+export MANPAGER="nvim -c 'set ft=man' -"
 export LS_OPT2='--color=auto'
 
 typeset -ga preexec_functions
