@@ -2,5 +2,5 @@
 
 if [[ ! ${DISPLAY} && ${XDG_VTNR} == 1 ]] && $(hash startx 2>/dev/null); then
     mv ~/.local/share/xorg/xsession-errors ~/.local/share/xorg/xsession-errors.old &>/dev/null
-    exec startx &> ~/.local/share/xorg/xsession-errors
+    exec startx awesome -- vt1 &> ~/.local/share/xorg/xsession-errors
 fi
