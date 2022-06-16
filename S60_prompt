@@ -23,18 +23,24 @@ schedprompt() {
 }
 
 # root prompt
-[ $UID = 0 ] && export PROMPT="$(print '%{\e[1;31m%}%m%{\e[1;34m%} %24<..<%~ %<<#%{\e[0m%} ')"
+[ $UID = 0 ] && export PROMPT="%F{red}%m%F{blue} %24<..<%~ %<<#%f "
 # # normal user prompt
-[ $UID != 0 ] && export PROMPT="$(print '%{\e[1;32m%}%n@%m%{\e[1;34m%} %24<..<%~ %<<$%{\e[0m%} ')"
+[ $UID != 0 ] && export PROMPT="%F{green}%n@%m%F{blue} %24<..<%~ %<<$%f "
 
-get_prompt() {
+get_rprompt() {
+    local RP=''
+    local F1=28
+    local F2=22
+
     if [[ -n $(get_git_prompt_info) ]]; then
-        echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}$(get_git_prompt_info)%{$fg_bold[blue]%}][%{$fg_bold[green]%}%D{%d.%m.%y %H:%M}%{$fg_bold[blue]%}]%{$reset_color%}"
+        RP="%F{$F2}%K{black}%F{black}%K{$F2}$(get_git_prompt_info)%F{$F2}%K{$F1}"
     else
-        echo "%{$fg_bold[blue]%}[%{$fg_bold[green]%}%D{%d.%m.%y %H:%M}%{$fg_bold[blue]%}]%{$reset_color%}"
+        RP="%F{$F1}%K{black}"
     fi
+
+    echo ${RP}"%F{black}%K{$F1}%D{%d.%m.%y %H:%M}%{$reset_color%}"
 }
-RPROMPT='$(get_prompt)'
+RPROMPT='$(get_rprompt)'
 schedprompt
 
 case $TERM in
