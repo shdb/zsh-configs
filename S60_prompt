@@ -41,6 +41,7 @@ get_rprompt() {
     echo ${RP}"%F{black}%K{$F1}%D{%d.%m.%y %H:%M}%{$reset_color%}"
 }
 RPROMPT='$(get_rprompt)'
+ZLE_RPROMPT_INDENT=0  # no space after the right prompt
 schedprompt
 
 case $TERM in
