@@ -52,11 +52,12 @@ alias lld='ls -l -d *(/)'
 alias chown='chown -v'
 alias chgrp='chgrp -v'
 alias less='less -r -i'
-alias scpresume="rsync --partial --progress --rsh=ssh --inplace --timeout=10"
-alias cal="cal -m"
+alias scpresume='rsync --partial --progress --rsh=ssh --inplace --timeout=10'
+alias cal='cal -m'
+alias bc='bc -l'
 alias e='smartextract'
 
-alias icat="kitty +kitten icat"
+alias icat='kitty +kitten icat'
 
 if [ -e /usr/bin/startx ] ; then
     alias sx='tmux new-session -d -s x11 "startx" && exit'

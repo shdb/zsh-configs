@@ -10,7 +10,6 @@ export MANWIDTH=999
 export PAGER='less -X -M'
 #export MANPAGER="nvim -c 'set ft=man' -"
 export LS_OPT2='--color=auto'
-export BC_ENV_ARGS=~/.config/bc/rc
 
 typeset -ga preexec_functions
 typeset -ga precmd_functions
