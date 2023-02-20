@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 export KEYTIMEOUT=1
-export HISTSIZE=500
-export SAVEHIST=500
+export HISTSIZE=1000
+export SAVEHIST=1000
 export HISTFILE=~/.history
 export EDITOR=nvim
 export MANPAGER='nvim +Man!'
