@@ -17,6 +17,7 @@ if [ "$TERM" != dumb ] && [ -x /usr/bin/grc ] ; then
     alias grep='grep --color'
     alias ls='ls --color=auto'
     alias ll='ls -l --color=auto'
+    alias llh='ls -l -h --color=auto'
 fi
 
 if test -e /etc/DIR_COLORS; then
