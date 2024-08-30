@@ -19,3 +19,5 @@ setopt prompt_subst
 PATH="/usr/lib/ccache/bin:${PATH}"
 CCACHE_DIR="/var/cache/ccache"
 DISTCC_DIR="/var/tmp/portage/.distcc"
+
+ulimit -s unlimited
