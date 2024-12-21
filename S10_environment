@@ -7,7 +7,8 @@ export HISTFILE=~/.history
 export EDITOR=nvim
 export MANPAGER='nvim +Man!'
 export MANWIDTH=999
-#export MANPAGER="nvim -c 'set ft=man' -"
+export PAGER='less'
+export LESS='-F -X -R'
 export LS_OPT2='--color=auto'
 
 typeset -ga preexec_functions
