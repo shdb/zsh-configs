@@ -35,6 +35,10 @@ alias e='smartextract'
 
 alias icat='kitty +kitten icat'
 
+if [ -e /usr/bin/nvim-cat ] ; then
+    alias ncat=/usr/bin/nvim-cat
+fi
+
 if [ -e /usr/bin/startx ] ; then
     alias sx='tmux new-session -d -s x11 "startx" && exit'
     alias xstart='startx "/usr/local/bin/xstarter xterm" -- :1'
