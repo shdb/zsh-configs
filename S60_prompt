@@ -38,7 +38,7 @@ get_rprompt() {
         RP="%F{$F1}%K{black}"
     fi
 
-    echo ${RP}"%F{black}%K{$F1}%D{%d.%m.%y %H:%M}%{$reset_color%}"
+    echo ${RP}"%F{black}%K{$F1}%D{%d.%m.%y %H:%M}%{$reset_color%}%f%k"
 }
 RPROMPT='$(get_rprompt)'
 ZLE_RPROMPT_INDENT=0  # no space after the right prompt
