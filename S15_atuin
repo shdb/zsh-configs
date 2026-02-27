@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+if [ -x /usr/bin/atuin ] ; then
+    eval "$(atuin init zsh --disable-up-arrow)"
+fi
