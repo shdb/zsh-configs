@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+if [ -x /usr/bin/zoxide ] ; then
+    eval "$(zoxide init zsh)"
+fi
