@@ -8,7 +8,6 @@ export GIT_AUTHOR_EMAIL="${EMAIL}"
 export GIT_COMMITTER_NAME="${FULLNAME}"
 export GIT_COMMITTER_EMAIL="${EMAIL}"
 
-# ----------------------------------------------------------------------
 # various git scripts
 
 gitize() {
@@ -18,26 +17,14 @@ gitize() {
         && git gc
 }
 
-# ----------------------------------------------------------------------
-# The following implements a caching mechanism for git information.
-# The RPROMPT executes get_git_bprompt_info() and include the output...
-#
-#   setopt prompt_subst
-#   RPROMPT="$(get_git_prompt_info)"
-#
 __ZSH_GIT_DIR=
 __ZSH_GIT_BRANCH=
 __ZSH_GIT_STATE=
 __ZSH_GIT_TS=0
 __ZSH_GIT_VARS_INVALID=1
 
-# get the name of the branch we are on
-parse_git_branch() {
-        git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) -- /'
-}
-
 # http://blog.madism.org/index.php/2008/05/07/173-git-prompt
-new_parse_git_branch() {
+zsh_git_parse_branch() {
     local force=$1
 
     local git_dir branch
@@ -51,8 +38,6 @@ new_parse_git_branch() {
     local new_stamp=$(stat -c '%Y' "$git_dir/HEAD")
     [[ "$force" == "0" && "$__ZSH_GIT_TS" == "$new_stamp" ]] && return
 
-    # rewritten by Thomas Ritz <thomas(at)galaxy-ritz(dot)de>
-    __ZSH_GIT_STATE=
     if [[ -d "$git_dir/rebase-apply" ]] ; then
             if [[ -f "$git_dir/rebase-apply/rebasing" ]] ; then
                     __ZSH_GIT_STATE="rebase"
@@ -65,18 +50,18 @@ new_parse_git_branch() {
     elif [[ -f "$git_dir/rebase-merge/interactive" ]] ; then
             __ZSH_GIT_STATE="rebase -i"
             branch="$(cat "$git_dir/rebase-merge/head-name")"
-    elif [[ -d "$git_dir/rebase-merge" ]] ; then           
+    elif [[ -d "$git_dir/rebase-merge" ]] ; then
             __ZSH_GIT_STATE="rebase -m"
             branch="$(cat "$git_dir/rebase-merge/head-name")"
-    elif [[ -f "$git_dir/MERGE_HEAD" ]] ; then             
+    elif [[ -f "$git_dir/MERGE_HEAD" ]] ; then
             __ZSH_GIT_STATE="merge"
             branch="$(git symbolic-ref HEAD 2>/dev/null)"
-    else                                             
+    else
             [[ -f "$git_dir/BISECT_LOG" ]] && __ZSH_GIT_STATE="bisect"
             branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
             branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
             branch="$(cut -c1-7 "$git_dir/HEAD")..."
-    fi                                              
+    fi
 
     __ZSH_GIT_FULL_DIR=$(readlink ${git_dir:h})
     __ZSH_GIT_DIR="${__ZSH_GIT_FULL_DIR/$HOME/~}"
@@ -90,7 +75,7 @@ zsh_git_invalidate_vars() {
         __ZSH_GIT_VARS_INVALID=1
 }
 zsh_git_compute_vars() {
-        new_parse_git_branch $1
+        zsh_git_parse_branch $1
         __ZSH_GIT_VARS_INVALID=0
 }
 
@@ -102,7 +87,7 @@ zsh_git_chpwd_update_vars() {
         zsh_git_compute_vars 1
 }
 zsh_git_preexec_update_vars() {
-        case "$(history $HISTCMD)" in 
+        case "$(history $HISTCMD)" in
         *git*)  zsh_git_invalidate_vars
                 ;;
         *)      [[ "$__ZSH_GIT_VARS_INVALID" == '0' ]] && return
