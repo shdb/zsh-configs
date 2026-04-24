@@ -948,6 +948,8 @@
   # Default context format (no privileges, no SSH): user@hostname.
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@%m'
 
+  typeset -g POWERLEVEL9K_CONTEXT_LEFT_LEFT_WHITESPACE=
+
   # Don't show context unless running with privileges or in SSH.
   # Tip: Remove the next line to always show context.
   #typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
