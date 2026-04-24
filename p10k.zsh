@@ -1680,6 +1680,7 @@
   # behavior where they contain the end times of their preceding commands.
   typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=false
   typeset -g POWERLEVEL9K_EXPERIMENTAL_TIME_REALTIME=true
+  typeset -g POWERLEVEL9K_EXPERIMENTAL_TIME_REALTIME_INTERVAL_SEC=60
   # Custom icon.
   typeset -g POWERLEVEL9K_TIME_VISUAL_IDENTIFIER_EXPANSION=
   # Custom prefix.
