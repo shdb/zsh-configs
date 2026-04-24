@@ -1,3 +1,4 @@
 #!/bin/zsh
 
+ZLE_RPROMPT_INDENT=0
 source ~/.zsh.d/powerlevel10k/powerlevel10k.zsh-theme
