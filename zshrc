@@ -23,5 +23,7 @@ for zshrc_snipplet in ~/.zsh.d/S[0-9][0-9]*[^~] ; do
         source $zshrc_snipplet
 done
 
+[[ ! -f ~/.zsh.d/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]] || source ~/.zsh.d/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
 # To customize prompt, run `p10k configure` or edit ~/.zsh.d/p10k.zsh.
 [[ ! -f ~/.zsh.d/p10k.zsh ]] || source ~/.zsh.d/p10k.zsh
